@@ -1,1 +1,4 @@
-(Dependencies list for installation)
+Flask>=3.1,<4
+gradio>=5,<6
+openai>=1.66,<3
+python-dotenv>=1,<2

@@ -1,0 +1,11 @@
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+chatbot.db
+chatbot.db-journal
+chatbot.db-wal
+chatbot.db-shm

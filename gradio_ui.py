@@ -1,30 +1,32 @@
 # This is for (Gradio chatbot UI) without Flask
 import gradio as gr
 import sqlite3
-import openai
+from openai import OpenAI
 import os
 from dotenv import load_dotenv  # Load environment variables
 
 # Load API key from .env file
 load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
+api_key = os.getenv("OPENAI_API_KEY")
 
 # Check if OpenAI API Key is set
-if not openai.api_key:
+if not api_key:
     raise ValueError(" OpenAI API key is missing! Set it in a .env file.")
+
+client = OpenAI(api_key=api_key)
+model = os.getenv("OPENAI_MODEL", "gpt-4.1-mini")
 
 # Function to generate chatbot response using OpenAI API
 def chatbot_ui(user_input, user_id=1):
     try:
-        response = openai.Completion.create(
-            model="gpt-3.5",  # Use "gpt-3.5-turbo" if needed
-            messages=[
-                {"role": "system", "content": "You are a wellness chatbot helping users with mood tracking and productivity."},
-                {"role": "user", "content": user_input}
-            ]
+        response = client.responses.create(
+            model=model,
+            instructions="You are a wellness chatbot helping users with mood tracking and productivity.",
+            input=user_input,
+            store=False,
         )
         
-        bot_message = response.choices[0].message.content  # Corrected syntax
+        bot_message = response.output_text
 
         # Store chat in database
         store_chat(user_id, user_input, bot_message)

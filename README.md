@@ -55,6 +55,8 @@ bewell-bot/
 
 ### 1. Create a virtual environment
 
+Use Python 3.10 or newer and run these commands from the repository root.
+
 ```bash
 python -m venv .venv
 source .venv/bin/activate
@@ -78,16 +80,20 @@ Copy `.env.example` to `.env` and add your own API key:
 
 ```text
 OPENAI_API_KEY=your_api_key_here
-OPENAI_MODEL=gpt-5.6
+OPENAI_MODEL=gpt-4.1-mini
 ```
 
 Never commit your real `.env` file or API key.
+
+Both entry points use `OPENAI_MODEL` (default: `gpt-4.1-mini`). Choose a Responses API model available to your OpenAI API project; API access and billing are required.
 
 ### 4. Initialize the database
 
 ```bash
 python database.py
 ```
+
+This creates the local `chatbot.db` and its tables; the database is generated and ignored by Git. Re-running the command preserves existing data.
 
 ### 5. Run the Gradio interface
 
